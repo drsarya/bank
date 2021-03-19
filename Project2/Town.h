@@ -8,8 +8,12 @@ public:
 	Bank* banks[10];
 	Town();
 	Bank* addBank(Bank* bank);
-	Bank* getBankById(int id);
+	//Bank* getBankById(int id);
 	Bank** getBanks();
+	Bank*  getBankById(int id);
+	int getClientIdByUserInfo(std::string info);
+	int getBankIdByUserInfo(std::string info);
+	int getLength( );
 	void  deleteBank(int id);
-	int getIdByBankInfo(std::string info);
+	Bank* getBankByBankInfo(std::string info);
 };

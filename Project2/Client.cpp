@@ -1,15 +1,40 @@
 #include "Client.h"
+#include <cstddef>
+ 
  
 
 
-Client::Client(char* name, BaseBill* bill )
+Client::Client(char* name  )
 {
+	if (name == NULL) 
+		throw gcnew System::ArgumentException("Передано пустое имя");
+
 	this->name = name;
-	this->bill = bill;
+	 
+}
+std::string Client::getClientInfo()
+{
+
+
+	std::string info = "ID: ";
+	info += std::to_string(this->getId());
+
+	info += " ,имя: ";
+	std::string name(this->name);
+	info += name;
+
+	info += " ,ID банка: ";
+	info += std::to_string(this->bill->bankId);
+	return info;
+	 
 }
 void Client::setId(int id)
 {
 	this->id = id;
+}
+void Client::setBill(BaseBill* bill)
+{
+	this->bill = bill;
 }
 int Client::getId()
 {

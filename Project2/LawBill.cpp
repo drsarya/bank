@@ -1,25 +1,29 @@
 #include "LawBill.h"
-bool  LawBill::transferMoney(double money, BaseBill* bill)
+void  LawBill::transferMoney(double money, BaseBill* bill)
 {
+
 	if (money < 0) {
-		return false;
+		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
 
-	if (bill->id == this->id) {
+	if (bill->id == this->id && bill->bankId == this->bankId) {
 		//перевод себе
-		return false;
+		throw gcnew System::ArgumentException("Перевод себе невозможно осуществить");
 	}
 
-	if (sum - money > 0) {
+	if (this->sum - money >= 0) {
 		this->takeMoney(money);
 		double comission = money * this->percentCom;
 		double realSum = money - comission;
 		this->comission += comission;
 		bill->putMoney(realSum);
-		return true;
+		 
+	}
+	else {
+		throw gcnew System::ArgumentException("Недостаточно средств");
 	}
 
-	return false;
+	 
 }
 
 

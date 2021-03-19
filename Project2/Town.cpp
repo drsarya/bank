@@ -29,10 +29,34 @@ Bank* Town::addBank(Bank* bank)
 }
 
 
+ 
+
+Bank** Town::getBanks()
+{
+	return this->banks;
+}
 Bank* Town::getBankById(int id)
 {
+	Bank* bank;
+	for (int i = 0; i < length; ++i)
+	{
+		if (banks[i]->getId() == id) {
+			bank = banks[i];
+			i = length;
+		}
+		
+	}
+	return bank;
+}
+Bank* Town::getBankByBankInfo(std::string info)
+{
+	int ind = info.find(" ");
+	info = 	info.substr(ind+1, info.length());
+	ind = info.find(" ");
+	std::string idStr = info.substr(0, ind);
+	int id = std::stoi(idStr  );
 	Bank* bank = NULL;
-	for (int i = 0; i < length && i<= id; i++) {
+	for (int i = 0; i < length && i <= id; i++) {
 		if (id == banks[i]->getId()) {
 			bank = banks[i];
 		}
@@ -40,18 +64,32 @@ Bank* Town::getBankById(int id)
 	return bank;
 }
 
-Bank** Town::getBanks()
-{
-	return this->banks;
-}
-int Town::getIdByBankInfo(std::string info)
+int Town::getClientIdByUserInfo(std::string info)
 {
 	int ind = info.find(" ");
-	info = 	info.substr(ind+1, info.length());
+	info = info.substr(ind + 1, info.length());
 	ind = info.find(" ");
 	std::string idStr = info.substr(0, ind);
-	int id = std::stoi(idStr  );
+	int id = std::stoi(idStr);
+
 	return id;
+}
+int Town::getBankIdByUserInfo(std::string info)
+{
+	for (int i = 0; i < 3; i++) {
+	int ind = info.find(":"); 
+	info = info.substr(ind + 2, info.length());
+	}
+	
+ 
+	std::string idStr = info.substr(0, info.length());
+	int id = std::stoi(idStr);
+
+	return id;
+}
+int Town::getLength()
+{
+	return this->length;
 }
 void  Town::deleteBank(int id)
 {
@@ -59,7 +97,7 @@ void  Town::deleteBank(int id)
 	{
 		if (banks[i]->getId() == id) {
 			for (int j = i; j < length-1; j++) {
-				banks[j] = banks[j] + 1;
+				banks[j] = banks[j+ 1] ;
 			}
 			i = length;
 		}

@@ -1,6 +1,6 @@
 #include "BaseBill.h"
 
-BaseBill::BaseBill( ) {
+BaseBill::BaseBill() {
 	this->sum = 0;
 	this->comission = 0;
 
@@ -15,61 +15,59 @@ void BaseBill::setInfo(double percentCom, int id, int bankId)
 	this->bankId = bankId;
 	this->id = id;
 	this->percentCom = percentCom;
-	 
+
 }
 
-bool BaseBill::putMoney(double money)
+void BaseBill::putMoney(double money)
 {
-	if (money > 0) {
-	 this->sum += money;
-	 return true;
+
+	if (money < 0) {
+		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
-	return false;
+
+
+	this->sum += money;
+
+
 }
 
-bool BaseBill::takeMoney(double money)
+void BaseBill::takeMoney(double money)
 {
 	if (money < 0) {
-		return false;
+		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
 
-	if (sum - money > 0) {
-		this->sum -= money;
-		return true;
+	if (this->sum - money < 0) {
+		throw gcnew System::ArgumentException("Недостаточно средств");
 	}
-	return false;
+	this->sum -= money;
 }
 
 
 
-  bool BaseBill::transferMoney(double money, BaseBill* bill)
+void BaseBill::transferMoney(double money, BaseBill* bill)
 {
-	  if (money < 0) {
-		  return false;
-	  }
-
-	if (bill->id == this->id) {
-		//перевод себе
-		return false;
+	if (money < 0) {
+		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
-
+	if (bill->id == this->id && bill->bankId == this->bankId) {
+		throw gcnew System::ArgumentException("Перевод себе невозможно осуществить");
+	}
 	if (bill->bankId == this->bankId) {
-		if (sum - money > 0) {
+		if (sum - money >= 0) {
 			this->takeMoney(money);
 			double comission = money * this->percentCom;
 			this->comission += comission;
 			double realSum = money - comission;
 			bill->putMoney(realSum);
-			return true;
 		}
 		else {
-			//недостаточно средств
+			throw gcnew System::ArgumentException("Недостаточно средств");
 		}
 	}
 	else {
-		//перевод в другой банк
+		throw gcnew System::ArgumentException("Недостаточно прав для перевода");
 	}
-	return false;
 }
 
 

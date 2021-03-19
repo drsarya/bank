@@ -1,4 +1,5 @@
 #include "LawBill.h"
+#include <string>
 class Client
 {
 private:
@@ -10,8 +11,10 @@ public:
 	BaseBill* getBill();
 	int getId();
 	void setId(int id);
-	Client(char* name, BaseBill* bill);
-
+	void setBill(BaseBill* bill);
+	Client(char* name );
+	std::string  getClientInfo();
+	 
 	~Client();
 
 };

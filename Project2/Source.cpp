@@ -23,14 +23,14 @@ int main(int argc, char* argv[])
 	 
 	Client** arr = bank->getClients();
  
-	for (int i = 0; i < bank->getCurrInd(); i++) {
+	for (int i = 0; i < bank->getLengthArr(); i++) {
 		 
 		printf("%s\n", arr[i]->getName());
 	}
 
 	bank->deleteClient(c2);
 
-	for (int i = 0; i < bank->getCurrInd(); i++) {
+	for (int i = 0; i < bank->getLengthArr(); i++) {
 
 		printf("%s\n", arr[i]->getName());
 	}
