@@ -21,7 +21,7 @@ int Bank::getId()
 void Bank::addClient(Client* client)
 {
 	client->setId(this->clientsId);
-	client->getBill()->setInfo(this->comission, this->length, this->id);
+	client->getBill()->setInfo(this->comission, this->clientsId, this->id);
 	clients[this->length] = client;
 	this->length++;
 	this->clientsId++;
