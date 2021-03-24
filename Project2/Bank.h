@@ -9,7 +9,6 @@ public:
 	int length;
 	int clientsId;
 	char* name;
-	//0 - 1
 	double comission;
 
 	Bank(char* name, double comission);
@@ -22,5 +21,6 @@ public:
 	double getBankBill();
 	Client* getClientById(int id);
 	std::string  getBankInfo();
+	~Bank();
 	 
 };

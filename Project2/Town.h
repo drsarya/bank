@@ -16,4 +16,5 @@ public:
 	int getLength( );
 	void  deleteBank(int id);
 	Bank* getBankByBankInfo(std::string info);
+	~Town();
 };

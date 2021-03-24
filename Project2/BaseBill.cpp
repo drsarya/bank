@@ -20,15 +20,10 @@ void BaseBill::setInfo(double percentCom, int id, int bankId)
 
 void BaseBill::putMoney(double money)
 {
-
 	if (money < 0) {
 		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
-
-
 	this->sum += money;
-
-
 }
 
 void BaseBill::takeMoney(double money)
@@ -68,6 +63,11 @@ void BaseBill::transferMoney(double money, BaseBill* bill)
 	else {
 		throw gcnew System::ArgumentException("Недостаточно прав для перевода");
 	}
+}
+
+BaseBill::~BaseBill()
+{
+	delete this;
 }
 
 

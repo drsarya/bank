@@ -26,6 +26,11 @@ void  LawBill::transferMoney(double money, BaseBill* bill)
 	 
 }
 
+LawBill::~LawBill()
+{
+	delete this;
+}
+
 
 
 

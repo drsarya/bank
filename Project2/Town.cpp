@@ -64,6 +64,14 @@ Bank* Town::getBankByBankInfo(std::string info)
 	return bank;
 }
 
+Town::~Town()
+{
+	for (int i = 0; i < length; ++i)
+	{
+		delete banks[i];
+	}
+}
+
 int Town::getClientIdByUserInfo(std::string info)
 {
 	int ind = info.find(" ");

@@ -14,15 +14,11 @@ Client::Client(char* name  )
 }
 std::string Client::getClientInfo()
 {
-
-
 	std::string info = "ID: ";
 	info += std::to_string(this->getId());
-
 	info += " ,имя: ";
 	std::string name(this->name);
 	info += name;
-
 	info += " ,ID банка: ";
 	info += std::to_string(this->bill->bankId);
 	return info;
@@ -50,10 +46,7 @@ BaseBill* Client::getBill()
 	return this->bill;
 }
 
-
-
-
-
 Client::~Client()
 {
+	delete this;
 }

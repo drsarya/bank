@@ -72,6 +72,14 @@ std::string  Bank::getBankInfo()
 
 	return info;
 }
+
+Bank::~Bank()
+{
+	for (int i = 0; i < length; ++i)
+	{
+		delete 	clients[i];
+	}
+}
  
 
 void Bank::deleteClient(int id)
@@ -85,7 +93,6 @@ void Bank::deleteClient(int id)
 			}
 			i = length;
 		}
-
 	}
 	this->length--;
 

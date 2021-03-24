@@ -68,8 +68,8 @@ namespace Project2 {
 	private: System::Windows::Forms::TextBox^ textBox4;
 	private: System::Windows::Forms::ListBox^ listBox3;
 	private: System::Windows::Forms::GroupBox^ groupBox6;
-	private: System::Windows::Forms::TextBox^ textBox5;
-	private: System::Windows::Forms::Label^ label8;
+
+
 	private: System::Windows::Forms::ListBox^ listBox4;
 	private: System::Windows::Forms::GroupBox^ groupBox7;
 	private: System::Windows::Forms::TextBox^ textBox6;
@@ -123,8 +123,6 @@ namespace Project2 {
 			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
 			this->listBox3 = (gcnew System::Windows::Forms::ListBox());
 			this->groupBox6 = (gcnew System::Windows::Forms::GroupBox());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
-			this->label8 = (gcnew System::Windows::Forms::Label());
 			this->listBox4 = (gcnew System::Windows::Forms::ListBox());
 			this->groupBox1->SuspendLayout();
 			this->groupBox7->SuspendLayout();
@@ -458,32 +456,13 @@ namespace Project2 {
 			// 
 			// groupBox6
 			// 
-			this->groupBox6->Controls->Add(this->textBox5);
-			this->groupBox6->Controls->Add(this->label8);
 			this->groupBox6->Controls->Add(this->listBox4);
 			this->groupBox6->Location = System::Drawing::Point(19, 176);
 			this->groupBox6->Name = L"groupBox6";
-			this->groupBox6->Size = System::Drawing::Size(230, 147);
+			this->groupBox6->Size = System::Drawing::Size(230, 107);
 			this->groupBox6->TabIndex = 15;
 			this->groupBox6->TabStop = false;
 			this->groupBox6->Text = L"Кому";
-			// 
-			// textBox5
-			// 
-			this->textBox5->Enabled = false;
-			this->textBox5->Location = System::Drawing::Point(80, 102);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(144, 20);
-			this->textBox5->TabIndex = 16;
-			// 
-			// label8
-			// 
-			this->label8->AutoSize = true;
-			this->label8->Location = System::Drawing::Point(6, 105);
-			this->label8->Name = L"label8";
-			this->label8->Size = System::Drawing::Size(64, 13);
-			this->label8->TabIndex = 15;
-			this->label8->Text = L"Комиссия: ";
 			// 
 			// listBox4
 			// 
@@ -516,7 +495,6 @@ namespace Project2 {
 			this->groupBox5->ResumeLayout(false);
 			this->groupBox5->PerformLayout();
 			this->groupBox6->ResumeLayout(false);
-			this->groupBox6->PerformLayout();
 			this->ResumeLayout(false);
 
 		}
@@ -528,6 +506,9 @@ namespace Project2 {
 	private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
 	}
 
+		   System::String^ transferMoney = "Перевод";
+		   System::String^ takeMoney = "Снятие денег";
+		   System::String^ addMoney = "Пополнить счёт";
 	private: System::Void button2_Click(System::Object^ sender, System::EventArgs^ e) {
 		DialogCreateBank^ dialog = gcnew DialogCreateBank(town, listBox1);
 		dialog->Owner = this;
@@ -580,13 +561,10 @@ namespace Project2 {
 				else {
 					c->setBill(new BaseBill());
 				}
-
-
 				System::String^ str = listBox1->GetItemText(listBox1->SelectedItem);
 				std::string info = marshal_as<std::string>(str);
 				Bank* bank = town->getBankByBankInfo(info);
 				bank->addClient(c);
-
 				updateClientsBox();
 			}
 			catch (System::ArgumentException^ e) {
@@ -599,11 +577,6 @@ namespace Project2 {
 			label10->Text = "Банк не выбран";
 			label10->Visible = true;
 		}
-
-
-
-
-
 	}
 	private:  void  updateClientsBox() {
 		listBox2->Items->Clear();
@@ -611,21 +584,19 @@ namespace Project2 {
 		std::string info = marshal_as<std::string>(str);
 		if (!info.empty()) {
 			Bank* bank = town->getBankByBankInfo(info);
-
 			Client** clients = bank->getClients();
 			for (int i = 0; i < bank->getLengthArr(); i++) {
 				std::string userInfo = clients[i]->getClientInfo();
 				listBox2->Items->Add(gcnew System::String(userInfo.c_str()));
 			}
 		}
-
 	}
 	private: System::Void checkBox1_CheckedChanged(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private:  void  updateClientOperations() {
-		listBox3->Items->Add("Перевод");
-		listBox3->Items->Add("Снять деньги");
-		listBox3->Items->Add("Положить");
+		listBox3->Items->Add(transferMoney);
+		listBox3->Items->Add(takeMoney);
+		listBox3->Items->Add(addMoney);
 	}
 	private:  void  updateClientIndormatiom() {
 		System::String^ str = listBox2->GetItemText(listBox2->SelectedItem);
@@ -655,8 +626,6 @@ namespace Project2 {
 
 		if (listBox2->SelectedIndex != -1 && listBox1->SelectedIndex != -1) {
 			updateClientIndormatiom();
-
-
 		}
 	}
 
@@ -664,7 +633,6 @@ namespace Project2 {
 	private: System::Void groupBox7_Enter(System::Object^ sender, System::EventArgs^ e) {
 	}
 	private: System::Void button5_Click(System::Object^ sender, System::EventArgs^ e) {
-
 		if (listBox2->SelectedIndex != -1) {
 			System::String^ str = listBox2->GetItemText(listBox2->SelectedItem);
 			std::string info = marshal_as<std::string>(str);
@@ -687,7 +655,7 @@ namespace Project2 {
 			System::String^ strNameOperation = listBox3->GetItemText(listBox3->SelectedItem);
 			std::string nameOperation = marshal_as<std::string>(strNameOperation);
 
-			if (nameOperation._Equal("Перевод")) {
+			if (nameOperation._Equal(marshal_as<std::string>(transferMoney->ToString()))) {
 				Bank** banks = town->getBanks();
 				for (int i = 0; i < town->getLength(); i++) {
 					Client** clients = banks[i]->getClients();
@@ -697,8 +665,6 @@ namespace Project2 {
 						listBox4->Items->Add(gcnew System::String(userInfo.c_str()));
 					}
 				}
-
-
 			}
 		}
 
@@ -708,31 +674,25 @@ namespace Project2 {
 			try {
 
 				label11->Visible = false;
-
 				System::String^ sumString = this->textBox4->Text->ToString();
 				double sum = System::Convert::ToDouble(sumString);
-
 				System::String^ str = listBox2->GetItemText(listBox2->SelectedItem);
 				std::string info = marshal_as<std::string>(str);
 				int idUser = town->getClientIdByUserInfo(info);
-
 				System::String^ str1 = listBox1->GetItemText(listBox1->SelectedItem);
 				std::string infobank = marshal_as<std::string>(str1);
 				Bank* bank = town->getBankByBankInfo(infobank);
 				Client* client = bank->getClientById(idUser);
-
 				System::String^ strNameOperation = listBox3->GetItemText(listBox3->SelectedItem);
 				std::string nameOperation = marshal_as<std::string>(strNameOperation);
-
-				if (nameOperation._Equal("Снять деньги")) {
+				if (nameOperation._Equal(marshal_as<std::string>(takeMoney->ToString()))) {
 					client->getBill()->takeMoney(sum);
 				}
-				else if (nameOperation._Equal("Положить")) {
+				else if (nameOperation._Equal(marshal_as<std::string>(addMoney->ToString()))) {
 					client->getBill()->putMoney(sum);
 				}
 				else {
 					if (listBox4->SelectedIndex != -1) {
-					 
 						System::String^ anotherUser = listBox4->GetItemText(listBox4->SelectedItem);
 						std::string anotherUserStr = marshal_as<std::string>(anotherUser);
 						int idAnotherUser = town->getClientIdByUserInfo(anotherUserStr);
@@ -750,13 +710,11 @@ namespace Project2 {
 				label11->Visible = true;
 			}
 			catch (System::Exception^ e) {
-
 				label11->Text = e->Message;
 				label11->Visible = true;
 
 			}
 		}
-
 		else {
 			label11->Text = "Проверьте выбор банка-клиента-операции";
 			label11->Visible = true;

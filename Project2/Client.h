@@ -14,7 +14,6 @@ public:
 	void setBill(BaseBill* bill);
 	Client(char* name );
 	std::string  getClientInfo();
-	 
 	~Client();
 
 };
