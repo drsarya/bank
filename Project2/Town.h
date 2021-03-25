@@ -1,8 +1,10 @@
 #include "Bank.h"
+#include "IdGeneratorUnique.h"
 class Town
 {
 private:
 	int length;
+	
 	int bankId;
 public:
 	Bank* banks[10];

@@ -120,18 +120,27 @@
   <ItemGroup>
     <ClCompile Include="Bank.cpp" />
     <ClCompile Include="BaseBill.cpp" />
+    <ClCompile Include="BaseClient.cpp" />
+    <ClCompile Include="Bill.cpp" />
     <ClCompile Include="Client.cpp" />
+    <ClCompile Include="IdGeneratorUnique.cpp" />
     <ClCompile Include="LawBill.cpp" />
+    <ClCompile Include="LawClient.cpp" />
     <ClCompile Include="MyForm.cpp" />
     <ClCompile Include="DialogCreateBank.cpp" />
     <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source1.cpp" />
     <ClCompile Include="Town.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bank.h" />
     <ClInclude Include="BaseBill.h" />
+    <ClInclude Include="BaseClient.h" />
+    <ClInclude Include="Bill.h" />
+    <ClInclude Include="IdGeneratorUnique.h" />
     <ClInclude Include="LawBill.h" />
     <ClInclude Include="Client.h" />
+    <ClInclude Include="LawClient.h" />
     <ClInclude Include="MyForm.h">
       <FileType>CppForm</FileType>
     </ClInclude>
