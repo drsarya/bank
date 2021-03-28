@@ -1,4 +1,7 @@
 #pragma once
+
+//#ifndef IDGENERATORUNIQUE
+//#define IDGENERATORUNIQUE
 class  IdGeneratorUnique
 {
 public:

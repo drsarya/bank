@@ -1,68 +1,78 @@
 
-
-
-
 #include "Bank.h"
+#include "BaseClient.h"
+#include "LawClient.h"
+#include "Bill.h"
+#include "IdGeneratorUnique.h"
 Bank::Bank(char* name, double comission)
 {
+	if ( comission < 0 ||  comission >1) {
+		throw gcnew System::ArgumentException("Неверная ставка");
+	}
+
+	if ( name == NULL) {
+		throw  gcnew System::ArgumentException("Пyстое значение имени");
+	}
+	this->id = IdGeneratorUnique::generateId();
 	this->name = name;
 	this->length = 0;
 	this->comission = comission;
-	this->clientsId = 0;
+
 }
-void Bank::setId(int id)
+
+
+void Bank::addClient(char* name, bool type)
 {
-	this->id = id;
+	if (type) {
+		clients[this->length] = new BaseClient(name);
+	}
+	else {
+		clients[this->length] = new LawClient(name);
+	}
+	this->length++;
+
+}
+
+
+
+BaseClient** Bank::getClients()
+{
+	return this->clients;
 }
 int Bank::getId()
 {
 	return this->id;
 }
-void Bank::addClient(Client* client)
-{
-	client->setId(this->clientsId);
-	client->getBill()->setInfo(this->comission, this->clientsId, this->id);
-	clients[this->length] = client;
-	this->length++;
-	this->clientsId++;
-
-}
-
-
-
-Client** Bank::getClients()
-{
-	return this->clients;
-}
 int Bank::getLengthArr()
 {
 	return this->length;
 }
-double Bank::getBankBill() {
-	double sum = 0;
-	for (int i = 0; i < this->length; ++i) {
-		sum += clients[i]->getBill()->comission;
-	}
-	return sum;
-}
-Client* Bank::getClientById(int id)
+
+Bill* Bank::getBankBill()
 {
-	Client* cl ;
+	return this->bill;
+}
+
+BaseClient* Bank::getClientById(int id)
+{
+
+	BaseClient* cl = NULL;
 	for (int i = 0; i < this->length; ++i)
 	{
-		if (clients[i]->getId() == id) {
+		if (clients[i]->id == id) {
 			cl = clients[i];
 			i = this->length;
 		}
 
 	}
 	return cl;
+
 }
 std::string  Bank::getBankInfo()
 {
 
 	std::string info = "ID: ";
-	info += std::to_string(this->getId());
+	info += std::to_string(this->id);
 
 	info += " ,название:  ";
 	std::string name(this->name);
@@ -79,8 +89,9 @@ Bank::~Bank()
 	{
 		delete 	clients[i];
 	}
+	delete this;
 }
- 
+
 
 void Bank::deleteClient(int id)
 {

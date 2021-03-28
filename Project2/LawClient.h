@@ -1,12 +1,18 @@
+
+
 #include "BaseClient.h"
+ 
+#include "Bank.h"
+ 
+ 
 #pragma once
 class  LawClient : public BaseClient
 {
 public:
-	LawClient();
+	LawClient(char* name) :BaseClient(name) {};
 	~LawClient();
 
-	void transferMoney(int idUser, double sum);
+ 	void transferMoney(Bank* currentBank, BaseClient* another, double sum);
 
 };
 

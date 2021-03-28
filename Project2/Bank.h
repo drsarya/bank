@@ -1,26 +1,33 @@
-#include "Client.h"
-#include <string>
 
+
+
+#ifndef HEADER_NAME
+#define HEADER_NAME
+ 
+ #include <string>
+class BaseClient ;
+class Bill;
 class Bank
 {
 public:
 	int id;
-	Client* clients[15];
+	BaseClient* clients[15];
 	int length;
-	int clientsId;
+	Bill* bill;
 	char* name;
 	double comission;
 
 	Bank(char* name, double comission);
-	void addClient(Client* client);
+	void addClient(char* name,   bool type);
 	void deleteClient(int id);
-	Client** getClients();
-	int getId();
-	void setId(int id);
+	BaseClient** getClients();
+	int  getId();
  	int  getLengthArr();
-	double getBankBill();
-	Client* getClientById(int id);
+	Bill* getBankBill();
+
+	BaseClient* getClientById(int id);
 	std::string  getBankInfo();
 	~Bank();
 	 
 };
+#endif

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DialogCreateBank.h"
-
+/*
 
 namespace Project2 {
 
@@ -726,4 +726,4 @@ namespace Project2 {
 
 	}
 	};
-}
+}*/

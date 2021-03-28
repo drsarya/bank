@@ -1,35 +1,23 @@
 
 #include "Town.h"
-#include <iostream>
-
+ 
+ 
 Town::Town() {
 	length = 0;
-	bankId = 0;
+	 
 }
 
-Bank* Town::addBank(Bank* bank)
+Bank* Town::addBank(char* name, double comission)
 {
-
-	if (bank->comission < 0 || bank->comission >1) {
-		throw gcnew System::ArgumentException("Неверная ставка");
-	}
-
-	if (bank->name == NULL) {
-		throw  gcnew System::ArgumentException("Пyстое значение имени");
-	}
-
-
+	Bank* bank = new Bank(name, comission);
 	if (this->length < 10) {
-		bank->setId(this->bankId);
-		banks[this->length] = bank;
+ 		banks[this->length] = bank;
 		this->length++;
-		this->bankId++;
+		 
 	}
 	return bank;
 }
 
-
- 
 
 Bank** Town::getBanks()
 {
@@ -37,7 +25,8 @@ Bank** Town::getBanks()
 }
 Bank* Town::getBankById(int id)
 {
-	Bank* bank;
+	Bank* bank = NULL;
+	//int id = ParserStringsInfo::getBankIdByUserInfo(info);
 	for (int i = 0; i < length; ++i)
 	{
 		if (banks[i]->getId() == id) {
@@ -48,53 +37,17 @@ Bank* Town::getBankById(int id)
 	}
 	return bank;
 }
-Bank* Town::getBankByBankInfo(std::string info)
-{
-	int ind = info.find(" ");
-	info = 	info.substr(ind+1, info.length());
-	ind = info.find(" ");
-	std::string idStr = info.substr(0, ind);
-	int id = std::stoi(idStr  );
-	Bank* bank = NULL;
-	for (int i = 0; i < length && i <= id; i++) {
-		if (id == banks[i]->getId()) {
-			bank = banks[i];
-		}
-	}
-	return bank;
-}
+ 
 
 Town::~Town()
 {
 	for (int i = 0; i < length; ++i)
 	{
-		delete banks[i];
+		 delete banks[i];
 	}
 }
 
-int Town::getClientIdByUserInfo(std::string info)
-{
-	int ind = info.find(" ");
-	info = info.substr(ind + 1, info.length());
-	ind = info.find(" ");
-	std::string idStr = info.substr(0, ind);
-	int id = std::stoi(idStr);
-
-	return id;
-}
-int Town::getBankIdByUserInfo(std::string info)
-{
-	for (int i = 0; i < 3; i++) {
-	int ind = info.find(":"); 
-	info = info.substr(ind + 2, info.length());
-	}
-	
  
-	std::string idStr = info.substr(0, info.length());
-	int id = std::stoi(idStr);
-
-	return id;
-}
 int Town::getLength()
 {
 	return this->length;
