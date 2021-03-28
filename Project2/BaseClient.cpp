@@ -13,7 +13,7 @@ BaseClient::BaseClient(char* name)
 	}
 	this->id = IdGeneratorUnique::generateId();
 	this->bill = new Bill();
-	 
+	this->name = name;
 }
 
  void BaseClient::transferMoney(Bank* currentBank, BaseClient* another, double sum )
@@ -21,7 +21,7 @@ BaseClient::BaseClient(char* name)
 	if (sum < 0) {
 		throw gcnew System::ArgumentException("Некорректная сумма");
 	}
-	else if (this->bill->getSum() - sum*currentBank->comission < 0) {
+	else if (this->bill->getSum() - (sum * currentBank->comission + sum) < 0) {
 		throw gcnew System::ArgumentException("Недостаточно средств");
 	}
 	else if (this->id == another->id) {
@@ -29,7 +29,7 @@ BaseClient::BaseClient(char* name)
 	}
  
 	if (currentBank->getClientById(another->id) != NULL) {
-		this->takeMoney(this->bill->getSum() - sum * currentBank->comission);
+		this->takeMoney(  sum * currentBank->comission +sum );
 		another->putMoney(sum);
 		currentBank->bill->setSum(currentBank->bill->getSum() + sum * currentBank->comission);
 	}
@@ -62,4 +62,23 @@ void BaseClient::takeMoney(double sum)
 int BaseClient::getId()
 {
 	return this->id;
+}
+
+void BaseClient::setBankId(int id)
+{
+	this->BankId = id;
+}
+
+std::string BaseClient::getClientInfo()
+{
+	std::string info = "ID: ";
+	info += std::to_string(this->getId());
+	info += " ,имя: ";
+	std::string name(this->name);
+	info += name;
+	info += " ,ID банка: ";
+	info += std::to_string(this->BankId);
+	 
+ 
+	return info;
 }

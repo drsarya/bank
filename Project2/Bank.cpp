@@ -17,6 +17,7 @@ Bank::Bank(char* name, double comission)
 	this->name = name;
 	this->length = 0;
 	this->comission = comission;
+	this->bill = new Bill();
 
 }
 
@@ -29,6 +30,7 @@ void Bank::addClient(char* name, bool type)
 	else {
 		clients[this->length] = new LawClient(name);
 	}
+	clients[this->length]->setBankId(this->id);
 	this->length++;
 
 }
