@@ -425,6 +425,7 @@ namespace Project2 {
 			this->label11->TabIndex = 16;
 			this->label11->Text = L"label11";
 			this->label11->Visible = false;
+			this->label11->Click += gcnew System::EventHandler(this, &MyForm::label11_Click);
 			// 
 			// button1
 			// 
@@ -731,5 +732,7 @@ namespace Project2 {
 
 
 	}
-	};
+	private: System::Void label11_Click(System::Object^ sender, System::EventArgs^ e) {
+	}
+};
 } 
